@@ -1,0 +1,122 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-family: 'Poiret One', cursive;
+}
+
+a {
+  color: #00B7FF;
+}
+.bordermain{
+  /* background-color: red !important; */
+  width: 200px;
+  height: 200px;
+  border: 2px solid;
+  border-color: coral;
+  float: left;
+  margin-left: 50px;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+}
+.extra{
+  border:5px solid coral;
+}
+.bordermain:hover{
+  /* background-color: red !important; */
+  width: 200px;
+  height: 200px;
+  border: 2px solid;
+  border-color: black;
+  float: left;
+  margin-left: 50px;
+  background-color: coral;
+
+}
+
+
+
+#paypal-button-container{
+  text-align: center;
+}
+#paypal-button-container2{
+  text-align: center;
+}
+#paypal-button-container3{
+  text-align: center;
+}
+#paypal-button-container4{
+  text-align: center;
+}
+#paypal-button-container5{
+  text-align: center;
+}
+
+.tlacitko{
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin-top: 20px;
+}
+input[type=text] {
+  width: 10%;
+  font-size: 30px;
+  border: none;
+  border-bottom: 1px solid #8842d5; 
+  box-shadow: 0px 15px 10px -15px #111; 
+  text-align: center;
+}
+input[type=text]:hover {
+  border: none;
+  box-shadow: 0px 17px 11px -15px #111;
+  border-bottom: 1px solid #8842d5; 
+}
+
+@media screen and (max-width: 992px) {
+  input[type=text] {
+    width: 15%;
+    font-size: 30px;
+    border: none;
+    border-bottom: 1px solid #8842d5; 
+    box-shadow: 0px 15px 10px -15px #111; 
+    text-align: center;
+  }
+  input[type=text]:hover {
+    border: none;
+    box-shadow: 0px 17px 11px -15px #111;
+    border-bottom: 1px solid #8842d5; 
+  }
+}
+@media only screen and (max-width: 600px) {
+  input[type=text] {
+    width: 20%;
+    font-size: 30px;
+    border: none;
+    border-bottom: 1px solid #8842d5; 
+    box-shadow: 0px 15px 10px -15px #111; 
+    text-align: center;
+  }
+  input[type=text]:hover {
+    border: none;
+    box-shadow: 0px 17px 11px -15px #111;
+    border-bottom: 1px solid #8842d5; 
+  }
+}
+th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4CAF50;
+  color: white;
+}
+ td, th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+table {
+  border-collapse: collapse;
+}

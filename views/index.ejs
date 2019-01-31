@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="http://files.softicons.com/download/business-icons/pretty-office-11-icons-by-custom-icon-design/png/256x256/cash.png">
+    <link rel="stylesheet" href="../stylesheets/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Poiret+One" rel="stylesheet"> 
+    <title>Rich Certificate</title>
+</head>
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    
+    <div id="intro">
+        <p>This site will give you <b>Certificate</b>. Show your friends you can afford spending money without a reason.</p>
+    </div>
+   
+<script src="https://www.paypalobjects.com/api/checkout.js"></script>
+<div style="margin:auto;">
+<!-- <div class="bordermain">
+    <h1 style="text-align:center;">2$</h1>
+    <p style="text-align:center;"> Clicking on this button will give you <b>Certificate</b> of being rich for <b>2$</b></p>
+
+<div id="paypal-button-container"></div>
+</div>
+
+<div class="bordermain">
+    <h1 style="text-align:center;">5$</h1>
+    <p style="text-align:center;"> Clicking on this button will give you <b>Certificate</b> of being rich for <b>5$</b></p>
+
+<div id="paypal-button-container2"></div>
+</div>
+
+<div class="bordermain extra">
+    <h1 style="text-align:center;">10$</h1>
+    <p style="text-align:center;"> Clicking on this button will give you <b>Certificate</b> of being rich for <b>10$</b></p>
+
+<div id="paypal-button-container3"></div>
+</div>
+<div class="bordermain">
+    <h1 style="text-align:center;">50$</h1>
+    <p style="text-align:center;"> Clicking on this button will give you <b>Certificate</b> of being rich for <b>50$</b></p>
+
+<div id="paypal-button-container4"></div>
+</div>
+<div class="bordermain">
+    <h1 style="text-align:center;">100$</h1>
+    <p style="text-align:center;"> Clicking on this button will give you <b>Certificate</b> of being rich for <b>100$</b></p>
+
+<div id="paypal-button-container5"></div>
+</div>
+</div> -->
+<br>
+<br>
+<br>
+<br>
+
+<div style="margin: auto;
+width: 100%;
+border: 3px solid green;
+padding: 10px; text-align:center;float:left; margin-top:20px; position: relative;">
+<form action="/todo" method="post" style="margin-bottom:125px;">
+    <input type="text" placeholder=" $" id="name" name="name"> 
+    <br>
+    <!-- <input type="text" value="Insert value" id="data" name="data">
+    <br>  -->
+    
+    <button type="submit" class="tlacitko" value="pay">Submit</button>
+</form>
+
+<div style="margin: 0px auto; width: 100%; font-size: 33px;">
+        <table style="margin: 0px auto; width: 50%; font-size: 33px;">
+            <tr>
+                <th>Place</th>
+                <th>Name</th>
+                <th>Amount</th>
+              </tr>
+                <% for(var i=0; i < data.length; i++) { %>
+                    <tr>
+                      <td><%= i + 1 %></td>
+                      <td><%= data[i].name %> $</td>
+                      <%if ( i <= 2) { %>
+                            <td><b><%= data[i].amount %> $</b></td>
+                        <%}else { %>
+                      <td>  <%= data[i].amount %> $ </td>
+                          <% } %>
+                    </tr>
+                    
+                 <% } %>
+                
+                </table></div>
+</div>
+
+</body>
+
+<script>
+    var inserting = document.getElementById('data');
+     data.addEventListener("click", function( event ) {   
+         alert(data.value);
+   });
+
+    paypal.Button.render({
+
+        env: 'sandbox', // sandbox | production
+        style: {
+            label: 'credit',
+            size:  'medium',    // small | medium | large | responsive
+            shape: 'rect',     // pill | rect
+            color: 'blue',     // gold | blue | silver | black
+            tagline: false,   
+      
+        },
+        client: {
+            sandbox:    'AZDxjDScFpQtjWTOUtWKbyN_bDt4OgqaF4eYXlewfBP4-8aqX3PiV8e1GWU6liB2CUXlkA59kJXE7M6R',
+            production: 'ASrQ5J6Z8NIZj_TWbuSQQ8IHUJbBZIlME3kAUq8cB8KCQ1z_J_gssGXj00q21WkaqDnP2JVtjjAkUCol'
+        },
+
+        payment: function(data, actions,inserting) {
+            return actions.payment.create({
+                payment: {
+                    transactions: [
+                        {
+                            amount: { total: '2.00', currency: 'USD' }
+                        }
+                    ]
+                }
+            });
+        },
+
+        // Wait for the payment to be authorized by the customer
+
+        onAuthorize: function(data, actions) {
+
+            // Get the payment details
+
+            return actions.payment.get().then(function(data) {
+
+                // Display the payment details and a confirmation button
+
+                var shipping = data.payer.payer_info.shipping_address;
+
+                document.querySelector('#recipient').innerText = shipping.recipient_name;
+                document.querySelector('#line1').innerText     = shipping.line1;
+                document.querySelector('#city').innerText      = shipping.city;
+                document.querySelector('#state').innerText     = shipping.state;
+                document.querySelector('#zip').innerText       = shipping.postal_code;
+                document.querySelector('#country').innerText   = shipping.country_code;
+
+                document.querySelector('#paypal-button-container').style.display = 'none';
+                document.querySelector('#confirm').style.display = 'block';
+
+                // Listen for click on confirm button
+
+                document.querySelector('#confirmButton').addEventListener('click', function() {
+
+                    // Disable the button and show a loading message
+
+                    document.querySelector('#confirm').innerText = 'Loading...';
+                    document.querySelector('#confirm').disabled = true;
+
+                    // Execute the payment
+
+                    return actions.payment.execute().then(function() {
+
+                        // Show a thank-you note
+
+                        document.querySelector('#thanksname').innerText = shipping.recipient_name;
+
+                        document.querySelector('#confirm').style.display = 'none';
+                        document.querySelector('#thanks').style.display = 'block';
+                    });
+                });
+            });
+        }
+
+    }, '#paypal-button-container');
+
+
+    paypal.Button.render({
+
+env: 'production', // sandbox | production
+style: {
+            label: 'paypal',
+            size:  'medium',    // small | medium | large | responsive
+            shape: 'rect',     // pill | rect
+            color: 'blue',     // gold | blue | silver | black
+            tagline: false    
+        },
+client: {
+    sandbox:    'AZDxjDScFpQtjWTOUtWKbyN_bDt4OgqaF4eYXlewfBP4-8aqX3PiV8e1GWU6liB2CUXlkA59kJXE7M6R',
+    production: 'ASrQ5J6Z8NIZj_TWbuSQQ8IHUJbBZIlME3kAUq8cB8KCQ1z_J_gssGXj00q21WkaqDnP2JVtjjAkUCol'
+},
+
+payment: function(data, actions) {
+    return actions.payment.create({
+        payment: {
+            transactions: [
+                {
+                    amount: { total: '5.00', currency: 'USD' }
+                }
+            ]
+        }
+    });
+},
+
+// Wait for the payment to be authorized by the customer
+
+onAuthorize: function(data, actions) {
+
+    // Get the payment details
+
+    return actions.payment.get().then(function(data) {
+
+        // Display the payment details and a confirmation button
+
+        var shipping = data.payer.payer_info.shipping_address;
+
+        document.querySelector('#recipient').innerText = shipping.recipient_name;
+        document.querySelector('#line1').innerText     = shipping.line1;
+        document.querySelector('#city').innerText      = shipping.city;
+        document.querySelector('#state').innerText     = shipping.state;
+        document.querySelector('#zip').innerText       = shipping.postal_code;
+        document.querySelector('#country').innerText   = shipping.country_code;
+
+        document.querySelector('#paypal-button-container').style.display = 'none';
+        document.querySelector('#confirm').style.display = 'block';
+
+        // Listen for click on confirm button
+
+        document.querySelector('#confirmButton').addEventListener('click', function() {
+
+            // Disable the button and show a loading message
+
+            document.querySelector('#confirm').innerText = 'Loading...';
+            document.querySelector('#confirm').disabled = true;
+
+            // Execute the payment
+
+            return actions.payment.execute().then(function() {
+
+                // Show a thank-you note
+
+                document.querySelector('#thanksname').innerText = shipping.recipient_name;
+
+                document.querySelector('#confirm').style.display = 'none';
+                document.querySelector('#thanks').style.display = 'block';
+            });
+        });
+    });
+}
+
+}, '#paypal-button-container2');
+
+    paypal.Button.render({
+
+env: 'production', // sandbox | production
+style: {
+            label: 'paypal',
+            size:  'medium',    // small | medium | large | responsive
+            shape: 'rect',     // pill | rect
+            color: 'blue',     // gold | blue | silver | black
+            tagline: false    
+        },
+client: {
+    sandbox:    'AZDxjDScFpQtjWTOUtWKbyN_bDt4OgqaF4eYXlewfBP4-8aqX3PiV8e1GWU6liB2CUXlkA59kJXE7M6R',
+    production: 'ASrQ5J6Z8NIZj_TWbuSQQ8IHUJbBZIlME3kAUq8cB8KCQ1z_J_gssGXj00q21WkaqDnP2JVtjjAkUCol'
+},
+
+payment: function(data, actions) {
+    return actions.payment.create({
+        payment: {
+            transactions: [
+                {
+                    amount: { total: '10.00', currency: 'USD' }
+                }
+            ]
+        }
+    });
+},
+
+// Wait for the payment to be authorized by the customer
+
+onAuthorize: function(data, actions) {
+
+    // Get the payment details
+
+    return actions.payment.get().then(function(data) {
+
+        // Display the payment details and a confirmation button
+
+        var shipping = data.payer.payer_info.shipping_address;
+
+        document.querySelector('#recipient').innerText = shipping.recipient_name;
+        document.querySelector('#line1').innerText     = shipping.line1;
+        document.querySelector('#city').innerText      = shipping.city;
+        document.querySelector('#state').innerText     = shipping.state;
+        document.querySelector('#zip').innerText       = shipping.postal_code;
+        document.querySelector('#country').innerText   = shipping.country_code;
+
+        document.querySelector('#paypal-button-container').style.display = 'none';
+        document.querySelector('#confirm').style.display = 'block';
+
+        // Listen for click on confirm button
+
+        document.querySelector('#confirmButton').addEventListener('click', function() {
+
+            // Disable the button and show a loading message
+
+            document.querySelector('#confirm').innerText = 'Loading...';
+            document.querySelector('#confirm').disabled = true;
+
+            // Execute the payment
+
+            return actions.payment.execute().then(function() {
+
+                // Show a thank-you note
+
+                document.querySelector('#thanksname').innerText = shipping.recipient_name;
+
+                document.querySelector('#confirm').style.display = 'none';
+                document.querySelector('#thanks').style.display = 'block';
+            });
+        });
+    });
+}
+
+}, '#paypal-button-container3');
+
+ paypal.Button.render({
+
+env: 'production', // sandbox | production
+style: {
+            label: 'paypal',
+            size:  'medium',    // small | medium | large | responsive
+            shape: 'rect',     // pill | rect
+            color: 'blue',     // gold | blue | silver | black
+            tagline: false    
+        },
+client: {
+    sandbox:    'AZDxjDScFpQtjWTOUtWKbyN_bDt4OgqaF4eYXlewfBP4-8aqX3PiV8e1GWU6liB2CUXlkA59kJXE7M6R',
+    production: 'ASrQ5J6Z8NIZj_TWbuSQQ8IHUJbBZIlME3kAUq8cB8KCQ1z_J_gssGXj00q21WkaqDnP2JVtjjAkUCol'
+},
+
+payment: function(data, actions) {
+    return actions.payment.create({
+        payment: {
+            transactions: [
+                {
+                    amount: { total: '50.00', currency: 'USD' }
+                }
+            ]
+        }
+    });
+},
+
+// Wait for the payment to be authorized by the customer
+
+onAuthorize: function(data, actions) {
+
+    // Get the payment details
+
+    return actions.payment.get().then(function(data) {
+
+        // Display the payment details and a confirmation button
+
+        var shipping = data.payer.payer_info.shipping_address;
+
+        document.querySelector('#recipient').innerText = shipping.recipient_name;
+        document.querySelector('#line1').innerText     = shipping.line1;
+        document.querySelector('#city').innerText      = shipping.city;
+        document.querySelector('#state').innerText     = shipping.state;
+        document.querySelector('#zip').innerText       = shipping.postal_code;
+        document.querySelector('#country').innerText   = shipping.country_code;
+
+        document.querySelector('#paypal-button-container').style.display = 'none';
+        document.querySelector('#confirm').style.display = 'block';
+
+        // Listen for click on confirm button
+
+        document.querySelector('#confirmButton').addEventListener('click', function() {
+
+            // Disable the button and show a loading message
+
+            document.querySelector('#confirm').innerText = 'Loading...';
+            document.querySelector('#confirm').disabled = true;
+
+            // Execute the payment
+
+            return actions.payment.execute().then(function() {
+
+                // Show a thank-you note
+
+                document.querySelector('#thanksname').innerText = shipping.recipient_name;
+
+                document.querySelector('#confirm').style.display = 'none';
+                document.querySelector('#thanks').style.display = 'block';
+            });
+        });
+    });
+}
+
+}, '#paypal-button-container4');
+
+
+paypal.Button.render({
+
+env: 'production', // sandbox | production
+style: {
+            label: 'paypal',
+            size:  'medium',    // small | medium | large | responsive
+            shape: 'rect',     // pill | rect
+            color: 'blue',     // gold | blue | silver | black
+            tagline: false    
+        },
+client: {
+    sandbox:    'AZDxjDScFpQtjWTOUtWKbyN_bDt4OgqaF4eYXlewfBP4-8aqX3PiV8e1GWU6liB2CUXlkA59kJXE7M6R',
+    production: 'ASrQ5J6Z8NIZj_TWbuSQQ8IHUJbBZIlME3kAUq8cB8KCQ1z_J_gssGXj00q21WkaqDnP2JVtjjAkUCol'
+},
+
+payment: function(data, actions) {
+    return actions.payment.create({
+        payment: {
+            transactions: [
+                {
+                    amount: { total: '100.00', currency: 'USD' }
+                }
+            ]
+        }
+    });
+},
+
+// Wait for the payment to be authorized by the customer
+
+onAuthorize: function(data, actions) {
+
+    // Get the payment details
+
+    return actions.payment.get().then(function(data) {
+
+        // Display the payment details and a confirmation button
+
+        var shipping = data.payer.payer_info.shipping_address;
+
+        document.querySelector('#recipient').innerText = shipping.recipient_name;
+        document.querySelector('#line1').innerText     = shipping.line1;
+        document.querySelector('#city').innerText      = shipping.city;
+        document.querySelector('#state').innerText     = shipping.state;
+        document.querySelector('#zip').innerText       = shipping.postal_code;
+        document.querySelector('#country').innerText   = shipping.country_code;
+
+        document.querySelector('#paypal-button-container').style.display = 'none';
+        document.querySelector('#confirm').style.display = 'block';
+
+        // Listen for click on confirm button
+
+        document.querySelector('#confirmButton').addEventListener('click', function() {
+
+            // Disable the button and show a loading message
+
+            document.querySelector('#confirm').innerText = 'Loading...';
+            document.querySelector('#confirm').disabled = true;
+
+            // Execute the payment
+
+            return actions.payment.execute().then(function() {
+
+                // Show a thank-you note
+
+                document.querySelector('#thanksname').innerText = shipping.recipient_name;
+
+                document.querySelector('#confirm').style.display = 'none';
+                document.querySelector('#thanks').style.display = 'block';
+            });
+        });
+    });
+}
+
+}, '#paypal-button-container5');
+
+
+
+</script>
+</html>
