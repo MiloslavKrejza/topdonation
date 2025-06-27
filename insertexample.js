@@ -3,14 +3,14 @@
 var mysql = require('mysql');
  
 // create a connection variable with the required details
-var con = mysql.createConnection({
+const con = mysql.createConnection({
   host: "localhost", // ip address of server running mysql
   user: "root", // user name to your mysql database
   password: "12345", // corresponding password
   database: "my_db", // use the specified database
-  port:3000
+  port: 3000
 });
- 
+
 // make to connection to the database.
 con.connect(function(err) {
   if (err) throw err;
