@@ -1,10 +1,11 @@
 //sql
 const mysql = require('mysql');
-var con = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "my_db"
+const con = mysql.createConnection({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  port: process.env.DB_PORT,
 });
 
 
@@ -20,7 +21,7 @@ con.connect(function(err) {
 
 });
 
-var post  = {name:"HH", address: "LOL"};
+const post = {name: "HH", address: "LOL"};
 
 const query = con.query('INSERT INTO customers SET ?', post, function (error, results, fields) {
     if (error) throw error;

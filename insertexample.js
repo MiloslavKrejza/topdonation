@@ -1,14 +1,14 @@
 //insert.example
 // include mysql module
-var mysql = require('mysql');
- 
+const mysql = require('mysql');
+
 // create a connection variable with the required details
 const con = mysql.createConnection({
-  host: "localhost", // ip address of server running mysql
-  user: "root", // user name to your mysql database
-  password: "12345", // corresponding password
-  database: "my_db", // use the specified database
-  port: 3000
+  host: process.env.DB_HOST, // ip address of server running mysql
+  user: process.env.DB_USERNAME, // user name to your mysql database
+  password: process.env.DB_PASSWORD, // corresponding password
+  database: process.env.DB_NAME, // use the specified database
+  port: process.env.DB_PORT,
 });
 
 // make to connection to the database.
