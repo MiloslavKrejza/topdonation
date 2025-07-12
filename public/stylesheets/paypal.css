@@ -24,17 +24,34 @@ body {
     background: #fff;
     border-radius: 12px;
     box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-    padding: 30px 20px 50px;
+    border: 2px solid transparent;
+    padding: 30px 20px;
     max-width: 300px;
-    min-height: 220px;
+    min-height: auto;
     text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: all 0.4s ease;
     position: relative;
+    overflow: visible;
+    /* float: left;  ⚡️ Odstranit! */
+    margin: 0 auto;   /* 👍 zarovná box doprostřed */
+    box-sizing: border-box;
 }
+
+
+.bordermain iframe {
+    display: block;
+    width: 100% !important;
+}
+
+[id^="paypal-button-container"] {
+    text-align: center;
+}
+
 
 .bordermain:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    border-color: #0070ba;
 }
 
 .bordermain.extra {
@@ -50,6 +67,10 @@ body {
     font-size: 1rem;
     margin-bottom: 20px;
 }
+.bordermain form {
+    margin-top: 20px;
+}
+
 
 [id^="paypal-button-container"] {
     text-align: center;
