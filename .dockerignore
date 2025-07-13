@@ -1,0 +1,9 @@
+.idea
+node_modules
+.env
+docker-compose.yml
+Dockerfile
+nginx.conf
+export.sh
+.env.example
+topdonation.sql
