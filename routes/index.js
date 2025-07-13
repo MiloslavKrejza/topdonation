@@ -1,8 +1,8 @@
 const paypal = require('paypal-rest-sdk');
-var fs = require('fs');
-var mysql = require('mysql');
-var express = require('express');
-var router = express.Router();
+const fs = require('fs');
+const mysql = require('mysql');
+const express = require('express');
+const router = express.Router();
 const bodyParser = require('body-parser');
 ;
 
@@ -12,12 +12,13 @@ paypal.configure({
   'client_secret': 'EHPfJO_28xfA8J6hG4Dvb8-yN8i91KuyvN5SuUWQPKsrfpC-teSZ1CypOooeU7oSIFrSMLWWk1EgHuVo'
 });
 
-var con = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "",
-    database: "my_db"
-  });
+const con = mysql.createConnection({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+    port: process.env.DB_PORT,
+});
   
  
 
@@ -121,7 +122,7 @@ router.get('/success', (req, res) => {
           }
       }]
     };
-    var suma = fs.readFileSync("top.txt", "utf8");
+    const suma = fs.readFileSync("top.txt", "utf8");
     execute_payment_json.transactions[0].amount.total = suma; 
   
     paypal.payment.execute(paymentId, execute_payment_json, function (error, payment) {
@@ -129,14 +130,17 @@ router.get('/success', (req, res) => {
           console.log(error.response);
           throw error;
        } else {
-       
-        var post  = {name: payment.payer.payer_info.shipping_address.recipient_name, amount: payment.transactions[0].amount.total};
-        var query = con.query('INSERT INTO customers SET ?', post, function (error, results, fields) {
-            if(error) throw console.error(error);
-            
-             // Neat!¨
+
+          const post = {
+              name: payment.payer.payer_info.shipping_address.recipient_name,
+              amount: payment.transactions[0].amount.total
+          };
+          const query = con.query('INSERT INTO customers SET ?', post, function (error, results, fields) {
+              if (error) throw console.error(error);
+
+              // Neat!¨
               console.log("inserted");
-           });
+          });
           console.log(payment.payer.payer_info.shipping_address.recipient_name);
           console.log(payment.transactions[0].amount.total)
           res.send(payment);
