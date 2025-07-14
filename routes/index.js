@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 ;
 
 paypal.configure({
-  'mode': 'sandbox', //sandbox or live
+  'mode': 'live', //sandbox or live
   'client_id': 'ARjAHZ4MMUMpQLAKIMl9t7iXfzsCT7Sbb4JWIHHvMFMV_b5gMRj6tgXPSiOnJJ9b9AYDLbYhp7Hq5g9X',
   'client_secret': 'EHPfJO_28xfA8J6hG4Dvb8-yN8i91KuyvN5SuUWQPKsrfpC-teSZ1CypOooeU7oSIFrSMLWWk1EgHuVo'
 });
@@ -74,12 +74,12 @@ router.post('/todo', function(req,res){
             "items": [{
                 "name": "Donation",
                 "price": "25.00",
-                "currency": "USD",
+                "currency": "CZK",
                 "quantity": 1
             }]
         },
         "amount": {
-            "currency": "USD",
+            "currency": "CZK",
             "total": "25.00"
         },
         "description": ""
@@ -117,7 +117,7 @@ router.get('/success', (req, res) => {
       "payer_id": payerId,
       "transactions": [{
           "amount": {
-              "currency": "USD",
+              "currency": "CZK",
               "total": "25.00"
           }
       }]
