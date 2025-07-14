@@ -8,32 +8,32 @@
    <!-- <link rel="stylesheet" href="../stylesheets/paypal.css">-->
     <link href="https://fonts.googleapis.com/css?family=Poiret+One" rel="stylesheet">
     <title>Rich Certificate</title>
-    <script src="https://www.paypal.com/sdk/js?client-id=AZDxjDScFpQtjWTOUtWKbyN_bDt4OgqaF4eYXlewfBP4-8aqX3PiV8e1GWU6liB2CUXlkA59kJXE7M6R&currency=USD&disable-funding=credit,card"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=AZDxjDScFpQtjWTOUtWKbyN_bDt4OgqaF4eYXlewfBP4-8aqX3PiV8e1GWU6liB2CUXlkA59kJXE7M6R&currency=CZK&disable-funding=credit,card"></script>
 
 </head>
 <body>
 
 <div id="intro">
-    <p>This site will give you a <b>Certificate</b>. Show your friends you can afford spending money without a reason.</p>
+    <p>Tato stránka vám vystaví <b>Certifikát</b>. Ukažte svým přátelům, že si můžete dovolit utrácet peníze bez důvodu.</p>
 </div>
 
 <div class="container">
-    <% const amounts = [2,5,10,50,100]; %>
+    <% const amounts = [50,100,500,1000,2500]; %>
     <% amounts.forEach(function(amount, index) { %>
         <div class="bordermain <%= amount === 10 ? 'extra' : '' %>">
-            <h1>$<%= amount %></h1>
-            <p>Clicking on this button will give you a <b>Certificate</b> for <b>$<%= amount %></b></p>
+            <h1><%= amount %> CZK</h1>
+            <p>Kliknutím na toto tlačítko získáte <b>Certifikát</b> v hodnotě <b><%= amount %> CZK</b></p>
             <div id="paypal-button-container-<%= index %>"></div>
         </div>
     <% }); %>
 
-    <!-- 💳 FORM jako další bordermain box -->
+
     <div class="bordermain">
-        <h1>Custom Amount</h1>
-        <p>Enter your own amount & pay with credit card</p>
+        <h1>Vlastní částka</h1>
+        <p>Zadejte vlastní částku, nebo zaplaťte kartou</p>
         <form action="/todo" method="post">
-            <input type="text" placeholder="$" id="name" name="name">
-            <button type="submit" class="tlacitko">Submit</button>
+            <input type="text" placeholder="CZK" id="name" name="name">
+            <button type="submit" class="tlacitko">Odeslat</button>
         </form>
     </div>
 </div>
@@ -41,15 +41,15 @@
 
     <table>
         <tr>
-            <th>Place</th>
-            <th>Name</th>
-            <th>Amount</th>
+            <th>Umístění</th>
+            <th>Jméno</th>
+            <th>Částka</th>
         </tr>
         <% for(var i=0; i < data.length; i++) { %>
             <tr>
                 <td><%= i + 1 %></td>
                 <td><%= data[i].name %></td>
-                <td><%= data[i].amount %> $</td>
+                <td>CZK <%= data[i].amount %></td>
             </tr>
         <% } %>
     </table>
@@ -60,7 +60,7 @@
 </div>
 
 <script>
-    const amounts = [2,5,10,50,100];
+    const amounts = [50,100,500,1000,2500];
     amounts.forEach(function(amount, index) {
         paypal.Buttons({
             style: {
