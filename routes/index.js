@@ -4,12 +4,12 @@ const mysql = require('mysql');
 const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
-;
+
 
 paypal.configure({
-  'mode': 'live', //sandbox or live
-  'client_id': 'ARjAHZ4MMUMpQLAKIMl9t7iXfzsCT7Sbb4JWIHHvMFMV_b5gMRj6tgXPSiOnJJ9b9AYDLbYhp7Hq5g9X',
-  'client_secret': 'EHPfJO_28xfA8J6hG4Dvb8-yN8i91KuyvN5SuUWQPKsrfpC-teSZ1CypOooeU7oSIFrSMLWWk1EgHuVo'
+  'mode': process.env.PAYPAL_MODE,
+  'client_id': process.env.PAYPAL_CLIENT_ID,
+  'client_secret': process.env.PAYPAL_CLIENT_SECRET,
 });
 
 const con = mysql.createConnection({
@@ -25,23 +25,25 @@ const con = mysql.createConnection({
 router.use(bodyParser.urlencoded({extended:true}));
 
 /* GET home page. */
-router.get('/lol', function(req, res, next) {
-    var readme = fs.readFileSync("readme.txt", "utf8");
+router.get('/lol', async (req, res, next) => {
+    const readme = fs.readFileSync("readme.txt", "utf8");
     console.log(readme);
   res.render('index', { title: 'Express' });
 });
-router.get('/', function(req, res, next) {
-    let sql = 'SELECT * FROM customers ORDER BY amount DESC';
+
+
+router.get('/', async (req, res, next) => {
+    const sql = 'SELECT * FROM customers ORDER BY amount DESC';
     let query = con.query(sql, (err, results) => {
         if(err) throw err;
         console.log(results);
         // res.sendfile('views/index.h', { data: results });
         res.render("index", {data: results})
     });
-  
 });
 
-router.post('/todo', function(req,res){
+
+router.post('/todo', async (req,res) =>{
      
   console.log(req.body.data);
 
@@ -109,7 +111,7 @@ paypal.payment.create(create_payment_json, function (error, payment) {
 });
 
 
-router.get('/success', (req, res) => {
+router.get('/success', async (req, res) => {
     const payerId = req.query.PayerID;
     const paymentId = req.query.paymentId;
   
