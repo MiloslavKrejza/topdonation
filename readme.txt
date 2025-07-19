@@ -1,1 +1,1 @@
-XDDDDDDDDDDDDDDDDDD
+Darujme život lidem bez pojištění.
