@@ -1,0 +1,3 @@
+dejzivot.cz, www.dejzivot.cz {
+  reverse_proxy app:3000
+}
