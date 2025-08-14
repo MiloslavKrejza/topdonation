@@ -1,9 +1,9 @@
-const paypal = require('paypal-rest-sdk');
-const fs = require('fs');
-const mysql = require('mysql');
-const express = require('express');
-const router = express.Router();
-const bodyParser = require('body-parser');
+const paypal = require('paypal-rest-sdk'); //PAYPAL GATEWAY
+const fs = require('fs'); //MUST REQUIRED
+const mysql = require('mysql'); // CONNECTION INTO DATAVBASE
+const express = require('express'); //EXPRESS server
+const router = express.Router(); //routing system
+const bodyParser = require('body-parser'); //parsing the text (easier)?
 ;
 
 paypal.configure({
@@ -35,13 +35,13 @@ router.get('/', function(req, res, next) {
     let query = con.query(sql, (err, results) => {
         if(err) throw err;
         console.log(results);
-        // res.sendfile('views/index.h', { data: results });
+        // res.sendfile('views/index.h', { data: results }); //opton failed
         res.render("index", {data: results})
     });
   
 });
 
-router.post('/todo', function(req,res){
+router.post('/todo', function(req,res){ //do todo to nagivate to other file route make it donated and send the link to database structure and  back to HOME index THANKS!!!
      
   console.log(req.body.data);
 
@@ -50,8 +50,8 @@ router.post('/todo', function(req,res){
 
 
   
-   fs.writeFileSync("top.txt", req.body.data);
-
+   fs.writeFileSync("top.txt", req.body.data); //writing th data to txt file temporarily
+      
     //    var stream = fs.createWriteStream("myfile.txt");
     //    stream.once('open', function(fd) {
     //      stream.write(req.body.name + ":");
